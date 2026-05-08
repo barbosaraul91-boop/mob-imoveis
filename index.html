@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOB Imóveis — Conectando você ao lugar certo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9a84c;--gold2:#e8c97a;--gold3:#f5e4b0;--gold-dim:#8b6914;
+  --silver:#a8a8b0;--silver2:#d0d0d8;
+  --black:#080808;--dark:#111;--dark2:#1a1a1a;--dark3:#222;
+  --white:#fff;
+  --border:rgba(201,168,76,0.25);--border2:rgba(201,168,76,0.12);
+  --muted:rgba(255,255,255,0.45);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden}
+.page{display:none}.page.active{display:block}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:70px;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;background:rgba(8,8,8,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2)}
+.nav-logo{cursor:pointer;display:flex;align-items:center}
+.nav-logo img{height:52px;width:auto;object-fit:contain}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .2s;font-weight:500;text-decoration:none}
+.nav-links a:hover,.nav-links a:focus{color:var(--gold2)}
+.nav-sep{width:1px;height:18px;background:var(--border)}
+.nav-admin-link{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);cursor:pointer;transition:color .2s}
+.nav-admin-link:hover{color:var(--gold)}
+
+.hero{min-height:100vh;padding-top:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,.07) 0%,transparent 65%);pointer-events:none}
+.hero-lines{position:absolute;inset:0;pointer-events:none}
+.hero-lines span{position:absolute;background:linear-gradient(90deg,transparent,rgba(201,168,76,.1),transparent);height:1px;width:100%}
+.hero-lines span:nth-child(1){top:28%}.hero-lines span:nth-child(2){top:72%}
+.hero-content{position:relative;z-index:1;padding:2rem;display:flex;flex-direction:column;align-items:center}
+.hero-eyebrow{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--silver);margin-bottom:2rem;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.hero-eyebrow::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.hero-logo{width:min(280px,54vw);height:auto;margin-bottom:1.5rem;animation:fadeUp .7s ease both}
+.hero-divider{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
+.hero-divider span{width:54px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.hero-divider span:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
+.hero-diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.5vw,22px);font-weight:300;font-style:italic;color:rgba(255,255,255,.7);margin-bottom:2rem;animation:fadeUp .7s .1s ease both}
+.hero-tagline strong{color:var(--gold2);font-style:normal;font-weight:600}
+.hero-team{display:flex;align-items:center;margin-bottom:.75rem;animation:fadeUp .7s .2s ease both}
+.hc{text-align:center;padding:0 2rem;position:relative}
+.hc:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:36px;background:var(--border)}
+.hc-init{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--gold)}
+.hc-init.silver{color:var(--silver2)}
+.hc-name{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:3px}
+.hero-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:2rem}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:fadeUp .7s .3s ease both}
+.btn-gold{display:inline-flex;align-items:center;gap:7px;padding:12px 28px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--black);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;border:none;transition:all .2s;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.btn-gold:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;padding:11px 28px;background:transparent;color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;border:1px solid var(--border);transition:all .2s;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.btn-ghost:hover{background:rgba(201,168,76,.08);border-color:var(--gold2)}
+.hero-stats{display:flex;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);margin-top:3rem;width:100%;max-width:600px;animation:fadeUp .7s .4s ease both}
+.hstat{flex:1;padding:1.25rem;text-align:center;position:relative}
+.hstat:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:26px;background:var(--border2)}
+.hstat-n{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--gold)}
+.hstat-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:3px}
+
+.search-bar{background:var(--dark2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:1.1rem 3rem}
+.search-bar-inner{display:flex;gap:8px;flex-wrap:wrap;align-items:center;max-width:1200px;margin:0 auto}
+.sf{padding:9px 13px;background:var(--dark3);border:1px solid var(--border2);color:var(--white);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:border-color .2s}
+.sf:focus{border-color:var(--gold)}
+.sf option{background:var(--dark2)}
+.sf-sm{flex:0 0 148px}.sf-md{flex:0 0 172px}.sf-lg{flex:1;min-width:130px}
+
+.section{padding:4.5rem 3rem;max-width:1400px;margin:0 auto}
+.sec-ey{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
+.sec-ey-line{width:28px;height:1px;background:var(--gold)}
+.sec-ey-txt{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,42px);font-weight:400;color:var(--white);margin-bottom:.3rem}
+.sec-sub{font-size:12px;color:var(--silver);margin-bottom:2.5rem;letter-spacing:.3px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border2)}
+.card{background:var(--dark2);overflow:hidden;transition:background .25s;cursor:pointer}
+.card:hover{background:var(--dark3)}
+.card-thumb{height:210px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card-thumb-bg{position:absolute;inset:0}
+.card-thumb-emoji{font-size:60px;position:relative;z-index:1}
+.card-thumb img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.card-badge{position:absolute;top:12px;left:12px;z-index:4;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%)}
+.st-d{background:rgba(201,168,76,.15);color:var(--gold2);border:1px solid rgba(201,168,76,.4)}
+.st-v{background:rgba(100,100,100,.2);color:var(--silver);border:1px solid rgba(168,168,176,.3)}
+.st-r{background:rgba(200,100,0,.15);color:#e8a060;border:1px solid rgba(200,100,0,.3)}
+.card-agent{position:absolute;top:12px;right:12px;z-index:4;display:flex;align-items:center;gap:6px;background:rgba(8,8,8,.85);backdrop-filter:blur(6px);border:1px solid var(--border);padding:4px 9px}
+.card-agent-init{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:700}
+.card-agent-init.cm,.card-agent-init.orb{color:var(--gold)}
+.card-agent-init.ao{color:var(--silver2)}
+.card-agent-name{font-size:9px;letter-spacing:1px;color:rgba(255,255,255,.45)}
+.card-body{padding:1.3rem}
+.card-tipo{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:5px}
+.card-nome{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:3px;line-height:1.2}
+.card-local{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:11px}
+.card-dets{display:flex;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:8px 0;margin-bottom:12px}
+.card-det{flex:1;text-align:center;font-size:11px;color:rgba(255,255,255,.4);position:relative}
+.card-det:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:13px;background:var(--border2)}
+.card-det strong{display:block;font-size:13px;color:var(--white);font-weight:600;margin-bottom:1px}
+.card-desc{font-size:11px;color:rgba(255,255,255,.32);line-height:1.55;margin-bottom:12px;font-weight:300}
+.card-footer{display:flex;justify-content:space-between;align-items:center}
+.card-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.card-cta{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.07));border:1px solid var(--border);color:var(--gold2);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;text-decoration:none;transition:all .2s;clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%)}
+.card-cta:hover{background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(201,168,76,.15));border-color:var(--gold2)}
+.card-extra-photos{display:flex;gap:4px;margin-top:9px;overflow-x:auto}
+.card-extra-photos img{height:42px;width:58px;object-fit:cover;border:1px solid var(--border2);flex-shrink:0}
+
+.no-results{padding:3.5rem;text-align:center;color:var(--silver);background:var(--dark2)}
+
+.team-section{background:var(--dark2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.team-inner{max-width:1400px;margin:0 auto;padding:4.5rem 3rem}
+.team-photo-wrap{width:160px;height:160px;border-radius:50%;overflow:hidden;margin:0 auto 1rem}
+.team-photo{width:100%;height:100%;object-fit:cover}
+.team-grid-3{grid-template-columns:repeat(3,1fr)!important}
+@media(max-width:700px){.team-grid-3{grid-template-columns:1fr!important}}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);margin-top:2.5rem}
+.team-card{background:var(--dark2);padding:2.5rem;text-align:center;transition:background .25s}
+.team-card:hover{background:var(--dark3)}
+.team-mono{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;letter-spacing:2px;margin-bottom:1rem}
+.team-mono.cm,.team-mono.orb{color:var(--gold)}
+.team-mono.ao{color:var(--silver2)}
+.team-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;margin-bottom:3px}
+.team-creci{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:.7rem}
+.team-desc{font-size:12px;color:rgba(255,255,255,.48);line-height:1.7;margin-bottom:1.4rem;font-weight:300}
+.btn-wa{display:inline-flex;align-items:center;gap:7px;padding:8px 20px;background:#25d366;color:white;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;text-decoration:none;transition:opacity .2s;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.btn-wa:hover{opacity:.85}
+
+.deps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);margin-top:2.5rem}
+.dep-card{background:var(--dark2);padding:2rem;position:relative}
+.dep-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:72px;position:absolute;top:8px;left:14px;color:var(--gold);opacity:.1;line-height:1}
+.dep-stars{color:var(--gold);letter-spacing:3px;margin-bottom:.8rem}
+.dep-txt{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:1.2rem;position:relative;z-index:1}
+.dep-autor{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--silver)}
+
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--border2);margin-top:2rem}
+.contact-item{background:var(--dark3);padding:2rem;text-align:center}
+.contact-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.contact-label.silver{color:var(--silver2)}
+.contact-info{font-size:12px;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:1rem}
+
+footer{background:var(--dark2);border-top:1px solid var(--border2);padding:2rem 3rem}
+.footer-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.footer-logo img{height:40px;width:auto}
+.footer-tagline{font-size:10px;letter-spacing:2px;color:var(--silver);text-align:center;flex:1}
+.footer-right{font-size:11px;color:rgba(255,255,255,.28);text-align:right;line-height:1.8}
+.footer-right span{cursor:pointer;transition:color .2s}
+.footer-right span:hover{color:var(--gold)}
+
+.wfloat{position:fixed;bottom:26px;right:26px;z-index:400;width:52px;height:52px;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:22px;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.35);transition:transform .2s;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.wfloat:hover{transform:scale(1.08)}
+
+/* ── ADMIN ── */
+.adm-page{padding-top:70px;min-height:100vh;background:var(--black)}
+.adm-hdr{background:var(--dark2);border-bottom:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center}
+.adm-hdr-t{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.adm-hdr-s{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:3px}
+.adm-body{padding:2rem 3rem;max-width:1400px;margin:0 auto}
+.adm-list{display:flex;flex-direction:column;gap:1px;background:var(--border2)}
+.adm-row{background:var(--dark2);padding:1rem 1.3rem;display:grid;grid-template-columns:48px 1fr 56px auto auto auto 150px;align-items:center;gap:1rem;transition:background .2s}
+.adm-row:hover{background:var(--dark3)}
+.adm-thumb{width:44px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark3);border:1px solid var(--border2);overflow:hidden;font-size:18px}
+.adm-thumb img{width:100%;height:100%;object-fit:cover}
+.adm-nm{font-size:13px;font-weight:600;color:var(--white)}
+.adm-lc{font-size:11px;color:var(--silver);margin-top:1px}
+.adm-corr{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
+.adm-corr.cm,.adm-corr.orb{color:var(--gold)}
+.adm-corr.ao{color:var(--silver2)}
+.adm-pr{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);font-style:italic}
+.adm-ar{font-size:11px;color:var(--silver)}
+.adm-st span{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 9px}
+.adm-acts{display:flex;gap:7px;justify-content:flex-end}
+.btn-edit{padding:5px 13px;border:1px solid var(--border2);background:transparent;color:rgba(255,255,255,.48);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-edit:hover{border-color:var(--gold);color:var(--gold)}
+.btn-del{padding:5px 13px;background:rgba(100,15,15,.3);border:1px solid rgba(180,40,40,.2);color:#e87070;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+
+/* ── MODALS ── */
+.overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--dark2);border:1px solid var(--border);width:94%;max-width:580px;max-height:92vh;overflow-y:auto;position:relative}
+.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold),transparent)}
+.modal-body{padding:2.25rem}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:1.5rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.form-field{display:flex;flex-direction:column;gap:9px;margin-bottom:0}
+.fi{padding:10px 13px;background:var(--dark3);border:1px solid var(--border2);color:var(--white);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:border-color .2s;width:100%}
+.fi:focus{border-color:var(--gold)}
+.fi option{background:var(--dark2)}
+textarea.fi{height:72px;resize:vertical}
+.form-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:2px}
+
+/* FOTO UPLOAD */
+.foto-area{border:1px dashed rgba(201,168,76,.3);background:var(--dark3);padding:1.25rem;text-align:center;cursor:pointer;transition:border-color .2s;user-select:none}
+.foto-area:hover{border-color:var(--gold)}
+.foto-area-icon{font-size:26px;margin-bottom:5px}
+.foto-area-txt{font-size:12px;color:rgba(255,255,255,.42)}
+.foto-area-hint{font-size:10px;color:rgba(255,255,255,.22);margin-top:2px}
+.foto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:7px;margin-top:9px}
+.foto-item{position:relative;aspect-ratio:4/3}
+.foto-item img{width:100%;height:100%;object-fit:cover;border:1px solid var(--border2)}
+.foto-item .capa{position:absolute;bottom:3px;left:3px;font-size:8px;letter-spacing:1px;background:rgba(0,0,0,.75);color:var(--gold);padding:1px 5px;text-transform:uppercase}
+.foto-item .rmv{position:absolute;top:3px;right:3px;background:rgba(0,0,0,.75);color:#e87070;border:none;border-radius:50%;width:19px;height:19px;font-size:13px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+
+.modal-actions{display:flex;gap:9px;margin-top:1.25rem}
+.btn-save{flex:1;padding:10px 16px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--black);border:none;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700;cursor:pointer}
+.btn-save:hover{opacity:.88}
+.btn-cancel{padding:10px 16px;background:transparent;border:1px solid var(--border2);color:rgba(255,255,255,.42);font-family:'Montserrat',sans-serif;font-size:11px;cursor:pointer}
+.btn-danger{padding:10px 16px;background:rgba(100,15,15,.3);border:1px solid rgba(180,40,40,.2);color:#e87070;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.login-err{color:#e87070;font-size:11px;margin-top:4px;display:none}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:860px){
+  .nav-links a:not(:last-child){display:none}
+  .team-grid,.deps-grid{grid-template-columns:1fr}
+  .section,.team-inner,.adm-body{padding:2.5rem 1.25rem}
+  .search-bar{padding:.9rem 1.25rem}
+  .adm-hdr{padding:1.5rem 1.25rem}
+  footer{padding:1.5rem 1.25rem}.footer-inner{flex-direction:column;gap:1rem;text-align:center}.footer-right{text-align:center}
+  .adm-row{grid-template-columns:1fr}
+}
+
+.carousel{position:relative;width:100%;height:100%;overflow:hidden}
+.carousel-inner{display:flex;height:100%;transition:transform .35s ease}
+.carousel-inner img{min-width:100%;height:100%;object-fit:cover;flex-shrink:0}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(0,0,0,.5);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.carousel-btn:hover{background:rgba(196,160,80,.7)}
+.carousel-prev{left:6px}
+.carousel-next{right:6px}
+.carousel-dots{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:10}
+.carousel-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:background .2s}
+.carousel-dot.active{background:#c9a84c}
+
+/* ── MODAL IMOVEL DETALHE ── */
+#overlay-detalhe{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .3s}
+#overlay-detalhe.open{opacity:1;pointer-events:all}
+.det-modal{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;width:100%;max-width:900px;max-height:92vh;overflow-y:auto;position:relative;display:flex;flex-direction:column}
+.det-close{position:sticky;top:0;z-index:10;display:flex;justify-content:flex-end;padding:.75rem 1rem;background:var(--card-bg);border-bottom:1px solid var(--border)}
+.det-close button{background:none;border:1px solid var(--border);color:var(--white);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.det-close button:hover{border-color:var(--gold);color:var(--gold)}
+.det-gallery{position:relative;width:100%;background:#000;border-radius:0}
+.det-gallery-main{width:100%;aspect-ratio:16/9;object-fit:contain;display:block;max-height:55vh}
+.det-gallery-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:rgba(0,0,0,.6);border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.det-gallery-nav:hover{background:rgba(196,160,80,.8)}
+.det-gallery-prev{left:10px}
+.det-gallery-next{right:10px}
+.det-gallery-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:5}
+.det-gallery-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .2s;border:none}
+.det-gallery-dot.active{background:var(--gold)}
+.det-thumbs{display:flex;gap:8px;padding:.75rem 1rem;overflow-x:auto;background:#000}
+.det-thumbs img{width:60px;height:60px;object-fit:cover;border-radius:6px;cursor:pointer;opacity:.5;transition:opacity .2s;border:2px solid transparent;flex-shrink:0}
+.det-thumbs img.active{opacity:1;border-color:var(--gold)}
+.det-info{padding:1.5rem}
+.det-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.det-nome{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--white);line-height:1.2}
+.det-price{font-size:1.4rem;font-weight:700;color:var(--gold);white-space:nowrap}
+.det-badges{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.det-tipo-badge{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);border-radius:20px;color:var(--silver)}
+.det-dets{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.2rem}
+.det-det{background:var(--dark2);border-radius:8px;padding:.75rem;text-align:center}
+.det-det strong{display:block;font-size:1.1rem;color:var(--gold);font-weight:700}
+.det-det span{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--silver)}
+.det-desc{font-size:.9rem;color:var(--silver2);line-height:1.7;margin-bottom:1.5rem}
+.det-corretor{display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--dark2);border-radius:10px;margin-bottom:1rem}
+.det-corretor-foto{width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:center 15%}
+.det-corretor-info{flex:1}
+.det-corretor-nome{font-weight:700;color:var(--white);margin-bottom:2px}
+.det-corretor-creci{font-size:11px;color:var(--silver);letter-spacing:1px}
+.det-cta{display:flex;gap:.75rem;flex-wrap:wrap}
+.det-cta a{flex:1;min-width:140px;text-align:center;padding:.75rem 1rem;border-radius:8px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.det-cta-wa{background:linear-gradient(135deg,rgba(196,160,80,.2),rgba(196,160,80,.1));border:1px solid var(--gold);color:var(--gold)}
+.det-cta-wa:hover{background:var(--gold);color:#000}
+@media(max-width:600px){.det-dets{grid-template-columns:repeat(2,1fr)}.det-gallery-main{max-height:40vh}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" id="nav-logo-wrap" onclick="showPage('home')"></div>
+  <div class="nav-links">
+    <a onclick="goTo('sec-imoveis')">Imóveis</a>
+    <a onclick="goTo('sec-contato')">Equipe & Contato</a>
+    <a class="nav-link" onclick="showPage('negocie')" style="color:var(--gold);font-weight:700">🏠 Negocie</a>
+    <div class="nav-sep"></div>
+    <span class="nav-admin-link" onclick="openLogin()">⚙ Admin</span>
+  </div>
+</nav>
+
+<!-- ══════ HOME ══════ -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"><span></span><span></span></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Timbó · SC</div>
+      <img id="hero-logo" class="hero-logo" alt="MOB Imóveis" />
+      <div class="hero-divider"><span></span><div class="hero-diamond"></div><span></span></div>
+      <div class="hero-tagline">Conectando você ao <strong>lugar certo</strong></div>
+      <div class="hero-team">
+        <div class="hc"><div class="hc-init">CM</div><div class="hc-name">Carla Moura</div></div>
+        <div class="hc"><div class="hc-init silver">AO</div><div class="hc-name">Aida Oliveira</div></div>
+        <div class="hc"><div class="hc-init">ORB</div><div class="hc-name">Osvaldo R. Brodwolf</div></div>
+      </div>
+      <div class="hero-sub">Três especialistas. Um só compromisso: você.</div>
+      <div class="hero-btns">
+        <button class="btn-gold" onclick="goTo('sec-imoveis')">Ver imóveis disponíveis</button>
+        <button class="btn-ghost" onclick="goTo('sec-team')">Falar com um corretor</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-n" id="stat-ativos">0</div><div class="hstat-l">Imóveis ativos</div></div>
+        <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Especialistas</div></div>
+        <div class="hstat"><div class="hstat-n">+10</div><div class="hstat-l">Anos de mercado</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="search-bar">
+    <div class="search-bar-inner">
+      <select class="sf sf-sm" id="f-tipo" onchange="filtrar()">
+        <option value="">Todos os tipos</option>
+        <option value="Casa">Casa</option>
+        <option value="Apartamento">Apartamento</option>
+        <option value="Terreno">Terreno</option>
+        <option value="Comercial">Comercial</option>
+        <option value="Sítio">Sítio / Chácara</option>
+      </select>
+      <select class="sf sf-sm" id="f-status" onchange="filtrar()">
+        <option value="">Qualquer status</option>
+        <option value="Disponível">Disponível</option>
+        <option value="Reservado">Reservado</option>
+        <option value="Vendido">Vendido</option>
+      </select>
+      <select class="sf sf-md" id="f-corretor" onchange="filtrar()">
+        <option value="">Todos os corretores</option>
+        <option value="cm">Carla Moura</option>
+        <option value="ao">Aida Oliveira</option>
+        <option value="orb">Osvaldo R. Brodwolf</option>
+      </select>
+      <input type="text" class="sf sf-lg" id="f-busca" placeholder="Buscar por bairro, cidade..." oninput="filtrar()" />
+      <button class="btn-gold" onclick="filtrar()">Buscar</button>
+    </div>
+  </div>
+
+  <div style="background:var(--black)">
+    <div class="section" id="sec-imoveis">
+      <div class="sec-ey"><div class="sec-ey-line"></div><div class="sec-ey-txt">Portfólio</div></div>
+      <div class="sec-title">Imóveis em Destaque</div>
+      <div class="sec-sub">Oportunidades em Timbó e região · </div>
+      <div class="grid" id="imoveis-grid"></div>
+      <div id="no-results" class="no-results" style="display:none">Nenhum imóvel encontrado.</div>
+    </div>
+  </div>
+
+
+
+  <div style="background:var(--black)">
+    <div class="section">
+      <div class="sec-ey"><div class="sec-ey-line"></div><div class="sec-ey-txt">Clientes</div></div>
+      <div class="sec-title">O que dizem sobre nós</div>
+      <div class="deps-grid">
+        <div class="dep-card"><div class="dep-stars">★★★★★</div><div class="dep-txt">"A Carla foi incrível em todo o processo. Encontrei minha casa em tempo recorde com total segurança."</div><div class="dep-autor">— Roberto & Cláudia S. · Cliente da Carla</div></div>
+        <div class="dep-card"><div class="dep-stars">★★★★★</div><div class="dep-txt">"A Aida nos ajudou a encontrar o ponto comercial ideal. Profissional excepcional, conhece cada detalhe do mercado."</div><div class="dep-autor">— Família Hoffmann · Cliente da Aida</div></div>
+        <div class="dep-card"><div class="dep-stars">★★★★★</div><div class="dep-txt">"O Osvaldo nos indicou terrenos que nem sabíamos que existiam. Assessoria completa do início ao fim."</div><div class="dep-autor">— Marcos T. · Cliente do Osvaldo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-section" id="sec-contato">
+    <div class="team-inner">
+      <div class="sec-ey"><div class="sec-ey-line"></div><div class="sec-ey-txt">Equipe & Contato</div></div>
+      <div class="sec-title">Nossos Especialistas</div>
+      <div class="sec-sub">Três especialistas. Um só compromisso: você.</div>
+      <div class="team-grid team-grid-3">
+        <div class="team-card">
+          <div class="team-photo-wrap"><img src="https://ycywwaqurxdkcbgywydi.supabase.co/storage/v1/object/public/fotos/corretores/Carla.png" class="team-photo" alt="Carla de Moura" style="object-position:center 14%" /></div>
+          <div class="team-name">Carla de Moura</div>
+          <div class="team-creci">CRECI/SC 69314F</div>
+          <div class="team-desc">Especialista em residencial e alto padrão em Timbó e região. Mais de 10 anos conectando famílias ao lar dos seus sonhos.</div>
+          <a href="https://wa.me/5547992358946?text=Olá%20Carla!%20Vim%20pelo%20site%20da%20MOB%20Imóveis%20e%20gostaria%20de%20falar%20com%20você." target="_blank" class="btn-wa">💬 Contato</a>
+        </div>
+        <div class="team-card">
+          <div class="team-photo-wrap"><img src="https://ycywwaqurxdkcbgywydi.supabase.co/storage/v1/object/public/fotos/corretores/Aida.png" class="team-photo" alt="Aida Oliveira" style="object-position:center 42%" /></div>
+          <div class="team-name">Aida Oliveira</div>
+          <div class="team-creci">CRECI/SC 66743F</div>
+          <div class="team-desc">Especialista em imóveis comerciais e investimentos. Atendimento personalizado para quem busca crescer com segurança.</div>
+          <a href="https://wa.me/5547933830848?text=Olá%20Aida!%20Vim%20pelo%20site%20da%20MOB%20Imóveis%20e%20gostaria%20de%20falar%20com%20você." target="_blank" class="btn-wa">💬 Contato</a>
+        </div>
+        <div class="team-card">
+          <div class="team-photo-wrap"><img src="https://ycywwaqurxdkcbgywydi.supabase.co/storage/v1/object/public/fotos/corretores/osvaldo2.jpg" class="team-photo" alt="Osvaldo R. Brodwolf" style="object-position:center 30%" /></div>
+          <div class="team-name">Osvaldo R. Brodwolf</div>
+          <div class="team-creci">CRECI/SC 65535F</div>
+          <div class="team-desc">Especialista em terrenos, sítios e imóveis rurais. Conhecimento profundo da região e das melhores oportunidades do interior catarinense.</div>
+          <a href="https://wa.me/5547988031738?text=Olá%20Osvaldo!%20Vim%20pelo%20site%20da%20MOB%20Imóveis%20e%20gostaria%20de%20falar%20com%20você." target="_blank" class="btn-wa">💬 Contato</a>
+        </div>
+      
+      <div style="margin-top:2rem;text-align:center">
+        <div class="sec-sub" style="margin-bottom:1rem">Prefere enviar por e-mail?</div>
+        <a href="mailto:contato@mobimoveis.com.br" class="btn-wa" style="display:inline-flex;gap:.5rem">✉️ contato@mobimoveis.com.br</a>
+      </div>
+      <div style="margin-top:2.5rem;text-align:center">
+        <button onclick="showPage('negocie')" class="btn-wa" style="font-size:.85rem;padding:.85rem 2rem;cursor:pointer;border:none">🏠 Quero negociar meu imóvel</button>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo"><img id="footer-logo" alt="MOB Imóveis" /></div>
+      <div class="footer-tagline">Três especialistas. Um só compromisso: <span style="color:var(--gold)">você</span>.</div>
+      <div class="footer-right">Carla de Moura · CRECI/SC 69314F<br><span onclick="openLogin()">Área administrativa</span></div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ══════ NEGOCIE PAGE ══════ -->
+<div id="page-negocie" class="page">
+  <nav>
+    <div class="nav-logo" style="display:flex;align-items:center;gap:10px;cursor:pointer" onclick="showPage('home')">
+      <img id="neg-nav-logo" alt="MOB" style="height:48px;width:auto;object-fit:contain" />
+    </div>
+    <div class="nav-links" style="display:flex">
+      <a onclick="showPage('home')">← Voltar</a>
+    </div>
+  </nav>
+  <div style="min-height:100vh;padding:6rem 1.5rem 3rem;background:var(--black)">
+    <div style="max-width:700px;margin:0 auto">
+      <div class="sec-ey"><div class="sec-ey-line"></div><div class="sec-ey-txt">Avaliação gratuita</div></div>
+      <div class="sec-title" style="text-align:left">Negocie seu imóvel!</div>
+      <div class="sec-sub" style="text-align:left;margin-bottom:2rem">Preencha as informações do seu imóvel e entraremos em contato. Todos os campos são opcionais.</div>
+
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:2rem;display:flex;flex-direction:column;gap:1.2rem">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Seu nome</label>
+            <input type="text" id="neg-nome-prop" class="fi" placeholder="Nome completo" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Telefone / WhatsApp</label>
+            <input type="text" id="neg-tel" class="fi" placeholder="(47) 9xxxx-xxxx" />
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.4rem">
+          <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">E-mail</label>
+          <input type="email" id="neg-email" class="fi" placeholder="seu@email.com" />
+        </div>
+        <hr style="border-color:var(--border);margin:.5rem 0" />
+        <div style="font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase">Dados do Imóvel</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Tipo</label>
+            <select id="neg-tipo" class="fi">
+              <option value="">Selecione...</option>
+              <option>Casa</option><option>Apartamento</option><option>Terreno</option><option>Sítio</option><option>Comercial</option>
+            </select>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Valor pretendido</label>
+            <input type="text" id="neg-preco" class="fi" placeholder="R$ 0,00" />
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem">
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Área (m²)</label>
+            <input type="text" id="neg-area" class="fi" placeholder="Ex: 120m²" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Quartos</label>
+            <input type="number" id="neg-quartos" class="fi" placeholder="0" min="0" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Vagas</label>
+            <input type="number" id="neg-vagas" class="fi" placeholder="0" min="0" />
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.4rem">
+          <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Localização</label>
+          <input type="text" id="neg-local" class="fi" placeholder="Bairro, cidade" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.4rem">
+          <label style="font-size:11px;letter-spacing:1px;color:var(--silver);text-transform:uppercase">Descrição adicional</label>
+          <textarea id="neg-desc" class="fi" rows="4" placeholder="Fale mais sobre o imóvel, diferenciais, estado de conservação..."></textarea>
+        </div>
+        <div id="neg-msg" style="display:none;padding:.75rem 1rem;border-radius:8px;font-size:.9rem"></div>
+        <button onclick="enviarNegocie()" class="btn-save" style="margin-top:.5rem">✉️ Enviar para a MOB Imóveis</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ ADMIN PAGE ══════ -->
+<div id="page-admin" class="page">
+  <nav>
+    <div class="nav-logo" style="display:flex;align-items:center;gap:10px;cursor:pointer" onclick="showPage('home')">
+      <img id="adm-nav-logo" alt="MOB" style="height:48px;width:auto;object-fit:contain" />
+      <span style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.35);font-family:Montserrat,sans-serif">Admin</span>
+    </div>
+    <div class="nav-links" style="display:flex">
+      <a onclick="showPage('home')">← Ver site</a>
+      <a onclick="logout()" style="color:#e87070">Sair</a>
+    </div>
+  </nav>
+  <div class="adm-page">
+    <div class="adm-hdr">
+      <div><div class="adm-hdr-t">Painel de Imóveis</div><div class="adm-hdr-s">MOB Imóveis · Gerenciamento</div></div>
+      <button class="btn-gold" onclick="abrirNovo()">+ Novo imóvel</button>
+    </div>
+    <div class="adm-body">
+      <div id="adm-list" class="adm-list"></div>
+      <div id="adm-empty" style="display:none;padding:3rem;text-align:center;color:var(--silver)">Nenhum imóvel cadastrado.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ MODAL LOGIN ══════ -->
+<div class="overlay" id="overlay-login">
+  <div class="modal">
+    <div class="modal-body">
+      <div class="modal-title">Acesso Administrativo</div>
+      <div class="form-field">
+        <input type="password" class="fi" id="login-senha" placeholder="Senha" onkeydown="if(event.key==='Enter')fazerLogin()" />
+        <div class="login-err" id="login-err">Senha incorreta. Tente novamente.</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="fecharModal('overlay-login')">Cancelar</button>
+        <button class="btn-save" onclick="fazerLogin()">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ MODAL IMOVEL ══════ -->
+<div class="overlay" id="overlay-imovel">
+  <div class="modal">
+    <div class="modal-body">
+      <div class="modal-title" id="modal-imovel-titulo">Novo Imóvel</div>
+      <input type="hidden" id="im-id" />
+      <div style="display:flex;flex-direction:column;gap:9px">
+
+        <input type="text" class="fi" id="im-nome" placeholder="Título do imóvel *" />
+
+        <div class="form-row">
+          <select class="fi" id="im-tipo">
+            <option value="Casa">Casa</option>
+            <option value="Apartamento">Apartamento</option>
+            <option value="Terreno">Terreno</option>
+            <option value="Comercial">Comercial</option>
+            <option value="Sítio">Sítio / Chácara</option>
+          </select>
+          <select class="fi" id="im-status">
+            <option value="Disponível">Disponível</option>
+            <option value="Reservado">Reservado</option>
+            <option value="Vendido">Vendido</option>
+          </select>
+        </div>
+
+        <select class="fi" id="im-corretor">
+          <option value="cm">Carla de Moura</option>
+          <option value="ao">Aida Oliveira</option>
+          <option value="orb">Osvaldo R. Brodwolf</option>
+        </select>
+
+        <input type="text" class="fi" id="im-local" placeholder="Bairro / Cidade (ex: Centro, Timbó)" />
+
+        <div class="form-row">
+          <input type="text" class="fi" id="im-preco" placeholder="Preço (ex: 420.000) *" />
+          <input type="text" class="fi" id="im-area" placeholder="Área (ex: 130m²)" />
+        </div>
+
+        <div class="form-row">
+          <input type="text" class="fi" id="im-quartos" placeholder="Quartos (ex: 3)" />
+          <input type="text" class="fi" id="im-vagas" placeholder="Vagas garagem" />
+        </div>
+
+        <textarea class="fi" id="im-desc" placeholder="Descrição do imóvel (opcional)"></textarea>
+
+        <select class="fi" id="im-emoji">
+          <option value="🏠">🏠 Casa</option>
+          <option value="🏢">🏢 Apartamento</option>
+          <option value="🏗️">🏗️ Terreno</option>
+          <option value="🏡">🏡 Sítio / Chácara</option>
+          <option value="🏬">🏬 Comercial</option>
+        </select>
+
+        <!-- FOTOS -->
+        <div>
+          <div class="form-label" style="margin-bottom:7px">Fotos do imóvel (máx. 20 · primeira será a capa)</div>
+          <div class="foto-area" id="foto-area" onclick="document.getElementById('foto-input').click()">
+            <div class="foto-area-icon">📷</div>
+            <div class="foto-area-txt">Clique para adicionar fotos</div>
+            <div class="foto-area-hint">JPG, PNG ou WebP</div>
+          </div>
+          <input type="file" id="foto-input" accept="image/jpeg,image/png,image/webp" multiple style="display:none" />
+          <div class="foto-grid" id="foto-grid"></div>
+        </div>
+
+      </div>
+      <div class="modal-actions">
+        <button class="btn-danger" id="btn-excluir" style="display:none" onclick="excluirImovel()">Excluir</button>
+        <button class="btn-cancel" onclick="fecharModal('overlay-imovel')">Cancelar</button>
+        <button class="btn-save" onclick="salvarImovel()">Salvar imóvel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="https://wa.me/5547992358946" target="_blank" class="wfloat">💬</a>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ── SUPABASE ──
+const SUPABASE_URL = 'https://ycywwaqurxdkcbgywydi.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljeXd3YXF1cnhka2NiZ3l3eWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNjg2NDQsImV4cCI6MjA5Mzc0NDY0NH0.NgNwGrXCDyd4KWhfP9wm2z4BmsFa29W1lZmztWbQn8Y';
+
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } });
+
+// ── LOGO ──
+const LOGO_DATA = 'data:image/png;base64,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';
+
+const FOTO_CARLA   = 'https://ycywwaqurxdkcbgywydi.supabase.co/storage/v1/object/public/fotos/corretores/Carla.png';
+const FOTO_AIDA    = 'https://ycywwaqurxdkcbgywydi.supabase.co/storage/v1/object/public/fotos/corretores/Aida.png';
+const FOTO_OSVALDO = 'https://ycywwaqurxdkcbgywydi.supabase.co/storage/v1/object/public/fotos/corretores/osvaldo.jpg';
+
+function aplicarLogos() {
+  var ids = ['hero-logo','footer-logo','adm-nav-logo','neg-nav-logo'];
+  ids.forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el){ el.src = LOGO_DATA; }
+  });
+  var wrap = document.getElementById('nav-logo-wrap');
+  if(wrap) {
+    wrap.innerHTML = '<img src="' + LOGO_DATA + '" style="height:52px;width:auto;object-fit:contain" alt="MOB Imóveis" />';
+  }
+}
+document.addEventListener('DOMContentLoaded', aplicarLogos);
+
+// ── CONSTANTES ──
+const SENHA_ADMIN = 'mob2025';
+const CORRETORES = {
+  cm:  { nome: 'Carla de Moura',       wa: '5547992358946', creci: '69314F', foto: FOTO_CARLA,   cor: 'var(--gold)' },
+  ao:  { nome: 'Aida Oliveira',         wa: '5547933830848', creci: '66743F', foto: FOTO_AIDA,    cor: 'var(--silver2)' },
+  orb: { nome: 'Osvaldo R. Brodwolf', wa: '5547988031738',             creci: '65535F', foto: FOTO_OSVALDO, cor: 'var(--gold)' }
+};
+const EMOJIS = { 'Casa':'🏠', 'Apartamento':'🏢', 'Terreno':'🏗️', 'Sítio':'🏡', 'Comercial':'🏬' };
+const THUMB_BG = {
+  'Casa':'linear-gradient(135deg,#0d1520,#1a2535)',
+  'Apartamento':'linear-gradient(135deg,#0a1520,#0f2030)',
+  'Terreno':'linear-gradient(135deg,#150e04,#251808)',
+  'Sítio':'linear-gradient(135deg,#071510,#0f2218)',
+  'Comercial':'linear-gradient(135deg,#100818,#1c0f28)'
+};
+
+var logado = false;
+var editandoId = null;
+var fotosAtual = [];
+
+// ── DADOS (Supabase) ──
+async function getDados() {
+  const { data, error } = await _supabase
+    .from('imoveis')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) { console.error('Erro ao buscar imóveis:', error); return []; }
+  return data || [];
+}
+
+async function salvarDados(obj, id) {
+  if (id) {
+    const { error } = await _supabase.from('imoveis').update(obj).eq('id', id);
+    if (error) { alert('Erro ao atualizar: ' + error.message); return false; }
+  } else {
+    const { error } = await _supabase.from('imoveis').insert(obj);
+    if (error) { alert('Erro ao inserir: ' + error.message); return false; }
+  }
+  return true;
+}
+
+async function deletarDado(id) {
+  const { error } = await _supabase.from('imoveis').delete().eq('id', id);
+  if (error) { alert('Erro ao excluir: ' + error.message); return false; }
+  return true;
+}
+
+// ── FOTOS (Supabase Storage) ──
+async function uploadFotos(arquivos) {
+  const urls = [];
+  for (const arquivo of arquivos) {
+    if (!arquivo.startsWith('data:')) { urls.push(arquivo); continue; } // já é URL
+    // Converte base64 para Blob
+    const res = await fetch(arquivo);
+    const blob = await res.blob();
+    const ext = blob.type === 'image/png' ? 'png' : blob.type === 'image/webp' ? 'webp' : 'jpg';
+    const nome = `imovel_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const { data, error } = await _supabase.storage.from('fotos').upload(nome, blob, { upsert: true });
+    if (error) { console.error('Erro upload foto:', error); continue; }
+    const { data: pub } = _supabase.storage.from('fotos').getPublicUrl(nome);
+    urls.push(pub.publicUrl);
+  }
+  return urls;
+}
+
+// Listener de fotos
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('foto-input').addEventListener('change', function() {
+    var files = Array.from(this.files);
+    var livres = 20 - fotosAtual.length;
+    if(livres <= 0) { alert('Limite de 20 fotos atingido.'); this.value = ''; return; }
+    files.slice(0, livres).forEach(function(file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        fotosAtual.push(e.target.result);
+        renderFotos();
+      };
+      reader.readAsDataURL(file);
+    });
+    this.value = '';
+  });
+});
+
+function renderFotos() {
+  var grid = document.getElementById('foto-grid');
+  if(!grid) return;
+  grid.innerHTML = fotosAtual.map(function(src, i) {
+    return '<div class="foto-item">' +
+      '<img src="' + src + '" alt="foto" />' +
+      (i === 0 ? '<div class="capa">Capa</div>' : '') +
+      '<button class="rmv" onclick="removerFoto(' + i + ')">×</button>' +
+      '</div>';
+  }).join('');
+}
+
+function removerFoto(idx) {
+  fotosAtual.splice(idx, 1);
+  renderFotos();
+}
+
+// ── RENDER SITE ──
+function renderSite(lista) {
+  _detalheCache = lista || [];
+  var grid = document.getElementById('imoveis-grid');
+  var noRes = document.getElementById('no-results');
+  if(!lista || !lista.length) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    document.getElementById('stat-ativos').textContent = '0';
+    return;
+  }
+  noRes.style.display = 'none';
+  var html = lista.map(function(im) {
+    var c = CORRETORES[im.corretor] || CORRETORES.cm;
+    var fotos = im.fotos && im.fotos.length ? im.fotos : null;
+    var stClass = im.status === 'Disponível' ? 'st-d' : im.status === 'Vendido' ? 'st-v' : 'st-r';
+    var waMsg = encodeURIComponent('Olá ' + c.nome + '! Vi o imóvel "' + im.nome + '" no site da MOB Imóveis e tenho interesse.');
+    var carouselId = 'car-' + im.id;
+    var thumbHtml = fotos && fotos.length > 0
+      ? (function(){
+          var imgs = fotos.map(function(f){ return '<img src="' + f + '" alt="' + im.nome + '" />'; }).join('');
+          var dots = fotos.length > 1 ? '<div class="carousel-dots">' + fotos.map(function(_,i){ return '<div class="carousel-dot' + (i===0?' active':'') + '" onclick="event.stopPropagation();carDot(\''+carouselId+'\','+i+')"></div>'; }).join('') + '</div>' : '';
+          var btns = fotos.length > 1 ? '<button class="carousel-btn carousel-prev" onclick="event.stopPropagation();carMove(\''+carouselId+'\',-1)">&#8249;</button><button class="carousel-btn carousel-next" onclick="event.stopPropagation();carMove(\''+carouselId+'\',1)">&#8250;</button>' : '';
+          return '<div class="carousel" id="' + carouselId + '" data-idx="0" data-total="' + fotos.length + '"><div class="carousel-inner">' + imgs + '</div>' + btns + dots + '</div>';
+        })()
+      : '<div class="card-thumb-bg" style="background:' + (THUMB_BG[im.tipo]||'#111') + '"></div><div class="card-thumb-emoji">' + (im.emoji||EMOJIS[im.tipo]||'🏠') + '</div>';
+    var dets = [];
+    if(im.area && im.area !== '—') dets.push('<div class="card-det"><strong>' + im.area + '</strong>Área</div>');
+    if(im.quartos && im.quartos !== '—') dets.push('<div class="card-det"><strong>' + im.quartos + '</strong>Quartos</div>');
+    if(im.vagas && im.vagas !== '—') dets.push('<div class="card-det"><strong>' + im.vagas + '</strong>Vaga(s)</div>');
+    var extraFotos = '';
+    return '<div class="card" onclick="abrirDetalhe(' + im.id + ')" style="cursor:pointer">' +
+      '<div class="card-thumb">' +
+        thumbHtml +
+        '<div class="card-badge ' + stClass + '">' + im.status + '</div>' +
+        '<div class="card-agent">' +
+          '<span class="card-agent-init ' + im.corretor + '">' + im.corretor.toUpperCase() + '</span>' +
+          '<span class="card-agent-name">' + c.nome.split(' ')[0] + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-tipo">' + im.tipo + '</div>' +
+        '<div class="card-nome">' + im.nome + '</div>' +
+        '<div class="card-local">📍 ' + im.local + '</div>' +
+        (dets.length ? '<div class="card-dets">' + dets.join('') + '</div>' : '') +
+        (im.description ? '<div class="card-desc">' + im.description + '</div>' : '') +
+        '<div class="card-footer">' +
+          '<div class="card-price">R$ ' + im.preco + '</div>' +
+          '<a href="https://wa.me/' + c.wa + '?text=' + waMsg + '" target="_blank" class="card-cta">💬 Contato</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  grid.innerHTML = html;
+  var disponiveis = lista.filter(function(i){ return i.status === 'Disponível'; }).length;
+  var el = document.getElementById('stat-ativos');
+  if(el) el.textContent = disponiveis;
+}
+
+async function carregarESincronizar() {
+  var lista = await getDados();
+  renderSite(lista);
+}
+
+async function filtrar() {
+  var lista = await getDados();
+  var t = document.getElementById('f-tipo').value;
+  var st = document.getElementById('f-status').value;
+  var cr = document.getElementById('f-corretor').value;
+  var b = document.getElementById('f-busca').value.toLowerCase();
+  if(t) lista = lista.filter(function(i){ return i.tipo === t; });
+  if(st) lista = lista.filter(function(i){ return i.status === st; });
+  if(cr) lista = lista.filter(function(i){ return i.corretor === cr; });
+  if(b) lista = lista.filter(function(i){ return (i.nome + i.local + (i.description||'')).toLowerCase().indexOf(b) >= 0; });
+  renderSite(lista);
+}
+
+// ── RENDER ADMIN ──
+async function renderAdmin() {
+  var lista = await getDados();
+  var listEl = document.getElementById('adm-list');
+  var emptyEl = document.getElementById('adm-empty');
+  if(!lista.length) {
+    listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  var html = lista.map(function(im) {
+    var c = CORRETORES[im.corretor] || CORRETORES.cm;
+    var stClass = im.status === 'Disponível' ? 'st-d' : im.status === 'Vendido' ? 'st-v' : 'st-r';
+    var thumbHtml = im.fotos && im.fotos.length
+      ? '<img src="' + im.fotos[0] + '" alt="" />'
+      : (im.emoji||EMOJIS[im.tipo]||'🏠');
+    return '<div class="adm-row">' +
+      '<div class="adm-thumb">' + thumbHtml + '</div>' +
+      '<div><div class="adm-nm">' + im.nome + '</div><div class="adm-lc">' + im.tipo + ' · ' + im.local + (im.fotos&&im.fotos.length?' · 📷 '+im.fotos.length:'') + '</div></div>' +
+      '<div class="adm-corr ' + im.corretor + '">' + im.corretor.toUpperCase() + '</div>' +
+      '<div class="adm-pr">R$ ' + im.preco + '</div>' +
+      '<div class="adm-ar">' + (im.area||'') + '</div>' +
+      '<div class="adm-st"><span class="' + stClass + '">' + im.status + '</span></div>' +
+      '<div class="adm-acts">' +
+        '<button class="btn-edit" onclick="abrirEditar(' + JSON.stringify(im.id) + ')">Editar</button>' +
+        '<button class="btn-del" onclick="confirmarExcluir(' + JSON.stringify(im.id) + ')">Excluir</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  listEl.innerHTML = html;
+}
+
+// ── MODAL IMOVEL ──
+function limparModal() {
+  document.getElementById('im-id').value = '';
+  document.getElementById('im-nome').value = '';
+  document.getElementById('im-tipo').value = 'Casa';
+  document.getElementById('im-status').value = 'Disponível';
+  document.getElementById('im-corretor').value = 'cm';
+  document.getElementById('im-local').value = '';
+  document.getElementById('im-preco').value = '';
+  document.getElementById('im-area').value = '';
+  document.getElementById('im-quartos').value = '';
+  document.getElementById('im-vagas').value = '';
+  document.getElementById('im-desc').value = '';
+  document.getElementById('im-emoji').value = '🏠';
+  fotosAtual = [];
+  renderFotos();
+  document.getElementById('foto-input').value = '';
+}
+
+function abrirNovo() {
+  editandoId = null;
+  document.getElementById('modal-imovel-titulo').textContent = 'Novo Imóvel';
+  document.getElementById('btn-excluir').style.display = 'none';
+  limparModal();
+  document.getElementById('overlay-imovel').classList.add('open');
+}
+
+async function abrirEditar(id) {
+  var lista = await getDados();
+  var im = lista.find(function(i){ return i.id == id; });
+  if(!im) return;
+  editandoId = id;
+  document.getElementById('modal-imovel-titulo').textContent = 'Editar Imóvel';
+  document.getElementById('btn-excluir').style.display = 'block';
+  document.getElementById('im-id').value = im.id;
+  document.getElementById('im-nome').value = im.nome;
+  document.getElementById('im-tipo').value = im.tipo;
+  document.getElementById('im-status').value = im.status;
+  document.getElementById('im-corretor').value = im.corretor || 'cm';
+  document.getElementById('im-local').value = im.local;
+  document.getElementById('im-preco').value = im.preco;
+  document.getElementById('im-area').value = im.area || '';
+  document.getElementById('im-quartos').value = im.quartos || '';
+  document.getElementById('im-vagas').value = im.vagas || '';
+  document.getElementById('im-desc').value = im.description || '';
+  document.getElementById('im-emoji').value = im.emoji || '🏠';
+  fotosAtual = im.fotos ? im.fotos.slice() : [];
+  renderFotos();
+  document.getElementById('foto-input').value = '';
+  document.getElementById('overlay-imovel').classList.add('open');
+}
+
+async function salvarImovel() {
+  var nome = document.getElementById('im-nome').value.trim();
+  var preco = document.getElementById('im-preco').value.trim();
+  if(!nome || !preco) { alert('Preencha pelo menos o nome e o preço.'); return; }
+
+  var btnSave = document.querySelector('.btn-save');
+  btnSave.textContent = 'Salvando...';
+  btnSave.disabled = true;
+
+  // Faz upload das fotos novas (base64) para o Storage
+  var fotasFinais = await uploadFotos(fotosAtual);
+
+  var obj = {
+    nome: nome,
+    preco: preco,
+    tipo: document.getElementById('im-tipo').value,
+    status: document.getElementById('im-status').value,
+    corretor: document.getElementById('im-corretor').value,
+    local: document.getElementById('im-local').value,
+    area: document.getElementById('im-area').value,
+    quartos: document.getElementById('im-quartos').value,
+    vagas: document.getElementById('im-vagas').value,
+    description: document.getElementById('im-desc').value,
+    emoji: document.getElementById('im-emoji').value,
+    fotos: fotasFinais
+  };
+
+  var ok = await salvarDados(obj, editandoId);
+  btnSave.textContent = 'Salvar imóvel';
+  btnSave.disabled = false;
+
+  if(ok) {
+    fecharModal('overlay-imovel');
+    renderAdmin();
+    carregarESincronizar();
+  }
+}
+
+async function confirmarExcluir(id) {
+  editandoId = id;
+  await excluirImovel();
+}
+
+async function excluirImovel() {
+  if(!confirm('Excluir este imóvel?')) return;
+  var ok = await deletarDado(editandoId);
+  if(ok) {
+    fecharModal('overlay-imovel');
+    renderAdmin();
+    carregarESincronizar();
+  }
+}
+
+// ── AUTH ──
+function openLogin() {
+  if(logado) { showPage('admin'); return; }
+  document.getElementById('login-senha').value = '';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('overlay-login').classList.add('open');
+}
+
+function fazerLogin() {
+  if(document.getElementById('login-senha').value === SENHA_ADMIN) {
+    logado = true;
+    fecharModal('overlay-login');
+    showPage('admin');
+    renderAdmin();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+
+function logout() { logado = false; showPage('home'); }
+
+// ── NAVEGAÇÃO ──
+function showPage(nome) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + nome).classList.add('active');
+  window.scrollTo(0, 0);
+  if(nome === 'home') carregarESincronizar();
+}
+
+function goTo(id) {
+  showPage('home');
+  setTimeout(function() {
+    var el = document.getElementById(id);
+    if(el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 80);
+}
+
+function fecharModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Fechar modal ao clicar fora
+document.querySelectorAll('.overlay').forEach(function(o) {
+  o.addEventListener('click', function(e) {
+    if(e.target === o) o.classList.remove('open');
+  });
+});
+
+
+// ── NEGOCIE ──
+function enviarNegocie() {
+  var nome  = document.getElementById('neg-nome-prop').value.trim();
+  var tel   = document.getElementById('neg-tel').value.trim();
+  var email = document.getElementById('neg-email').value.trim();
+  var tipo  = document.getElementById('neg-tipo').value;
+  var preco = document.getElementById('neg-preco').value.trim();
+  var area  = document.getElementById('neg-area').value.trim();
+  var qts   = document.getElementById('neg-quartos').value;
+  var vgs   = document.getElementById('neg-vagas').value;
+  var local = document.getElementById('neg-local').value.trim();
+  var desc  = document.getElementById('neg-desc').value.trim();
+
+  var msg = document.getElementById('neg-msg');
+
+  var linhas = ['🏠 *Nova solicitação de negociação — MOB Imóveis*', ''];
+  if(nome)  linhas.push('👤 Nome: ' + nome);
+  if(tel)   linhas.push('📱 Telefone: ' + tel);
+  if(email) linhas.push('✉️ E-mail: ' + email);
+  if(tipo)  linhas.push('🏷️ Tipo: ' + tipo);
+  if(preco) linhas.push('💰 Valor: ' + preco);
+  if(area)  linhas.push('📐 Área: ' + area);
+  if(qts)   linhas.push('🛏️ Quartos: ' + qts);
+  if(vgs)   linhas.push('🚗 Vagas: ' + vgs);
+  if(local) linhas.push('📍 Localização: ' + local);
+  if(desc)  linhas.push('📝 Descrição: ' + desc);
+
+  if(linhas.length <= 2) {
+    msg.style.display = 'block';
+    msg.style.background = '#3a1a1a';
+    msg.style.color = '#e88';
+    msg.textContent = 'Preencha pelo menos um campo antes de enviar.';
+    return;
+  }
+
+  var texto = encodeURIComponent(linhas.join('\n'));
+  // Envia via WhatsApp para Carla (número principal) — substituir por email quando disponível
+  window.open('https://wa.me/5547992358946?text=' + texto, '_blank');
+
+  msg.style.display = 'block';
+  msg.style.background = '#0a2a1a';
+  msg.style.color = '#6e9';
+  msg.textContent = '✅ Mensagem enviada! Em breve entraremos em contato.';
+}
+
+
+// ── CAROUSEL ──
+function carMove(id, dir) {
+  var el = document.getElementById(id);
+  if(!el) return;
+  var total = parseInt(el.dataset.total);
+  var idx = (parseInt(el.dataset.idx) + dir + total) % total;
+  el.dataset.idx = idx;
+  el.querySelector('.carousel-inner').style.transform = 'translateX(-' + (idx * 100) + '%)';
+  var dots = el.querySelectorAll('.carousel-dot');
+  dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+}
+function carDot(id, idx) {
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.dataset.idx = idx;
+  el.querySelector('.carousel-inner').style.transform = 'translateX(-' + (idx * 100) + '%)';
+  var dots = el.querySelectorAll('.carousel-dot');
+  dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+}
+
+// ── MODAL DETALHE ──
+var _detalheCache = [];
+
+function abrirDetalhe(id) {
+  var im = _detalheCache.find(function(i){ return i.id == id; });
+  if(!im) return;
+  var c = CORRETORES[im.corretor] || CORRETORES.cm;
+  var fotos = im.fotos && im.fotos.length ? im.fotos : null;
+  var stClass = im.status === 'Disponível' ? 'st-d' : im.status === 'Vendido' ? 'st-v' : 'st-r';
+  var waMsg = encodeURIComponent('Olá ' + c.nome + '! Vi o imóvel "' + im.nome + '" no site da MOB Imóveis e tenho interesse.');
+
+  // Gallery
+  var galleryHtml = '';
+  if(fotos && fotos.length > 0) {
+    var mainImg = '<img id="det-main-img" class="det-gallery-main" src="' + fotos[0] + '" alt="' + im.nome + '" />';
+    var navBtns = fotos.length > 1
+      ? '<button class="det-gallery-nav det-gallery-prev" onclick="detMove(-1)">&#8249;</button><button class="det-gallery-nav det-gallery-next" onclick="detMove(1)">&#8250;</button>'
+      : '';
+    var dots = fotos.length > 1
+      ? '<div class="det-gallery-dots">' + fotos.map(function(_,i){ return '<button class="det-gallery-dot' + (i===0?' active':'') + '" onclick="detGoTo('+i+')"></button>'; }).join('') + '</div>'
+      : '';
+    var thumbs = fotos.length > 1
+      ? '<div class="det-thumbs">' + fotos.map(function(f,i){ return '<img src="' + f + '" class="' + (i===0?'active':'') + '" onclick="detGoTo('+i+')" alt="foto '+i+'" />'; }).join('') + '</div>'
+      : '';
+    galleryHtml = '<div class="det-gallery" id="det-gallery" data-idx="0" data-total="' + fotos.length + '">' + mainImg + navBtns + dots + '</div>' + thumbs;
+  }
+
+  // Details
+  var detsHtml = '';
+  if(im.area) detsHtml += '<div class="det-det"><strong>' + im.area + '</strong><span>Área</span></div>';
+  if(im.quartos) detsHtml += '<div class="det-det"><strong>' + im.quartos + '</strong><span>Quartos</span></div>';
+  if(im.vagas) detsHtml += '<div class="det-det"><strong>' + im.vagas + '</strong><span>Vagas</span></div>';
+
+  // Corretor foto
+  var fotoCor = c.foto ? '<img src="' + c.foto + '" class="det-corretor-foto" alt="' + c.nome + '" />' : '<div class="det-corretor-foto" style="background:var(--dark3);display:flex;align-items:center;justify-content:center;font-size:1.2rem">' + im.corretor.toUpperCase() + '</div>';
+
+  var infoHtml =
+    '<div class="det-header">' +
+      '<div class="det-nome">' + im.nome + '</div>' +
+      '<div class="det-price">R$ ' + im.preco + '</div>' +
+    '</div>' +
+    '<div class="det-badges">' +
+      '<span class="det-tipo-badge">' + im.tipo + '</span>' +
+      '<span class="' + stClass + '" style="font-size:10px;letter-spacing:1.5px;padding:4px 10px;border-radius:20px">' + im.status + '</span>' +
+      (im.local ? '<span class="det-tipo-badge">📍 ' + im.local + '</span>' : '') +
+    '</div>' +
+    (detsHtml ? '<div class="det-dets">' + detsHtml + '</div>' : '') +
+    (im.description ? '<div class="det-desc">' + im.description + '</div>' : '') +
+    '<div class="det-corretor">' +
+      fotoCor +
+      '<div class="det-corretor-info">' +
+        '<div class="det-corretor-nome">' + c.nome + '</div>' +
+        '<div class="det-corretor-creci">CRECI/SC ' + c.creci + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="det-cta">' +
+      '<a href="https://wa.me/' + c.wa + '?text=' + waMsg + '" target="_blank" class="det-cta-wa">💬 Falar com ' + c.nome.split(' ')[0] + '</a>' +
+    '</div>';
+
+  document.getElementById('det-gallery-wrap').innerHTML = galleryHtml;
+  document.getElementById('det-info-wrap').innerHTML = infoHtml;
+  document.getElementById('overlay-detalhe').classList.add('open');
+  document.getElementById('overlay-detalhe').scrollTop = 0;
+}
+
+function detMove(dir) {
+  var el = document.getElementById('det-gallery');
+  if(!el) return;
+  var total = parseInt(el.dataset.total);
+  var idx = (parseInt(el.dataset.idx) + dir + total) % total;
+  detGoTo(idx);
+}
+
+function detGoTo(idx) {
+  var el = document.getElementById('det-gallery');
+  if(!el) return;
+  var total = parseInt(el.dataset.total);
+  el.dataset.idx = idx;
+  var imgs = el.querySelectorAll('img');
+  if(imgs[0]) imgs[0].src = imgs[0].src; // keep ref
+  // update main image
+  var mainImg = document.getElementById('det-main-img');
+  var gallery = document.getElementById('det-gallery');
+  var allSrcs = [];
+  document.querySelectorAll('.det-thumbs img').forEach(function(t){ allSrcs.push(t.src); });
+  if(allSrcs.length > 0 && mainImg) mainImg.src = allSrcs[idx];
+  // dots
+  document.querySelectorAll('.det-gallery-dot').forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+  // thumbs
+  document.querySelectorAll('.det-thumbs img').forEach(function(t,i){ t.classList.toggle('active', i===idx); });
+}
+
+// ── INIT ──
+carregarESincronizar();
+</script>
+
+<!-- ══════ MODAL DETALHE IMÓVEL ══════ -->
+<div id="overlay-detalhe">
+  <div class="det-modal">
+    <div class="det-close"><button onclick="fecharModal('overlay-detalhe')">×</button></div>
+    <div id="det-gallery-wrap"></div>
+    <div class="det-info" id="det-info-wrap"></div>
+  </div>
+</div>
+</body>
+</html>
