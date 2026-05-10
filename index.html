@@ -961,7 +961,7 @@ function renderSite(lista) {
       '<div class="card-thumb">' +
         thumbHtml +
         '<div class="card-badge ' + stClass + '">' + im.status + '</div>' +
-        '<button class="card-share" onclick="event.stopPropagation();compartilharImovel(' + JSON.stringify(im.codigo||im.id) + ','+JSON.stringify(im.nome)+')" title="Compartilhar">🔗</button>' +
+        '<button class="card-share" onclick="event.stopPropagation();compartilharImovel(' + JSON.stringify((im.codigo||String(im.id)).trim())) + ','+JSON.stringify(im.nome)+')" title="Compartilhar">🔗</button>' +
         '<div class="card-agent">' +
           '<span class="card-agent-init ' + im.corretor + '">' + im.corretor.toUpperCase() + '</span>' +
           '<span class="card-agent-name">' + c.nome.split(' ')[0] + '</span>' +
@@ -1449,7 +1449,7 @@ function abrirDetalhe(id) {
       '</div>' +
     '</div>' +
     '<div class="det-cta">' +
-      '<button onclick="compartilharImovel(' + JSON.stringify(im.codigo||im.id) + ',' + JSON.stringify(im.nome) + ')" style="flex:1;min-width:140px;text-align:center;padding:.75rem 1rem;border-radius:8px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:none;border:1px solid var(--border);color:var(--silver);transition:all .2s">🔗 Compartilhar</button>' +
+      '<button onclick="compartilharImovel(' + JSON.stringify((im.codigo||String(im.id)).trim()) + ',' + JSON.stringify(im.nome) + ')" style="flex:1;min-width:140px;text-align:center;padding:.75rem 1rem;border-radius:8px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:none;border:1px solid var(--border);color:var(--silver);transition:all .2s">🔗 Compartilhar</button>' +
       '<a href="https://wa.me/' + c.wa + '?text=' + waMsg + '" target="_blank" class="det-cta-wa">💬 Falar com ' + c.nome.split(' ')[0] + '</a>' +
     '</div>';
 
