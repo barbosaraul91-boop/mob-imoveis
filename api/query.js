@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -9,18 +8,20 @@ export default async function handler(req, res) {
   const { query, params } = req.body || {};
   if (!query) return res.status(400).json({ error: 'Missing query' });
 
-  const NEON_ENDPOINT = process.env.NEON_ENDPOINT;
-  const NEON_AUTH     = Buffer.from(
-    process.env.NEON_USER + ':' + process.env.NEON_PASSWORD
-  ).toString('base64');
-  const NEON_CONN     = process.env.NEON_CONNECTION_STRING;
+  const NEON_CONN = process.env.NEON_CONNECTION_STRING;
 
   try {
-    const neonRes = await fetch(NEON_ENDPOINT, {
+    // Extrai host e credenciais da connection string
+    const url = new URL(NEON_CONN);
+    const host = url.hostname;
+    const endpoint = `https://${host}/sql`;
+    const auth = Buffer.from(`${url.username}:${decodeURIComponent(url.password)}`).toString('base64');
+
+    const neonRes = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + NEON_AUTH,
+        'Authorization': 'Basic ' + auth,
         'Neon-Connection-String': NEON_CONN
       },
       body: JSON.stringify({ query, params: params || [] })
