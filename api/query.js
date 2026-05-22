@@ -10,12 +10,20 @@ export default async function handler(req, res) {
 
   const NEON_CONN = process.env.NEON_CONNECTION_STRING;
 
+  // DEBUG - remover depois
+  if (!NEON_CONN) return res.status(500).json({ error: 'NEON_CONNECTION_STRING not set' });
+
   try {
-    // Extrai host e credenciais da connection string
     const url = new URL(NEON_CONN);
     const host = url.hostname;
+    const username = url.username;
+    const password = decodeURIComponent(url.password);
+
+    // DEBUG - remover depois
+    if (!password) return res.status(500).json({ error: 'Password empty after parse', conn_preview: NEON_CONN.substring(0, 40) });
+
     const endpoint = `https://${host}/sql`;
-    const auth = Buffer.from(`${url.username}:${decodeURIComponent(url.password)}`).toString('base64');
+    const auth = Buffer.from(`${username}:${password}`).toString('base64');
 
     const neonRes = await fetch(endpoint, {
       method: 'POST',
