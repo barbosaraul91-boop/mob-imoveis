@@ -13,7 +13,18 @@ export default async function handler(req, res) {
   try {
     const sql = neon(process.env.NEON_CONNECTION_STRING);
     const rows = await sql(query, params || []);
-    return res.status(200).json({ rows });
+
+    // Parseia campos JSON que voltam como string
+    const parsed = rows.map(row => {
+      const r = Object.assign({}, row);
+      if (typeof r.fotos === 'string') {
+        try { r.fotos = JSON.parse(r.fotos); } catch(e) { r.fotos = []; }
+      }
+      if (r.fotos === null || r.fotos === undefined) r.fotos = [];
+      return r;
+    });
+
+    return res.status(200).json({ rows: parsed });
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }
