@@ -1,3 +1,5 @@
+import { neon } from '@neondatabase/serverless';
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -8,41 +10,10 @@ export default async function handler(req, res) {
   const { query, params } = req.body || {};
   if (!query) return res.status(400).json({ error: 'Missing query' });
 
-  const NEON_CONN = process.env.NEON_CONNECTION_STRING;
-
-  // DEBUG - remover depois
-  if (!NEON_CONN) return res.status(500).json({ error: 'NEON_CONNECTION_STRING not set' });
-
   try {
-    const url = new URL(NEON_CONN);
-    const host = url.hostname;
-    const username = url.username;
-    const password = decodeURIComponent(url.password);
-
-    // DEBUG - remover depois
-    if (!password) return res.status(500).json({ error: 'Password empty after parse', conn_preview: NEON_CONN.substring(0, 40) });
-
-    const endpoint = `https://${host}/sql`;
-    const auth = Buffer.from(`${username}:${password}`).toString('base64');
-
-    const neonRes = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + auth,
-        'Neon-Connection-String': NEON_CONN
-      },
-      body: JSON.stringify({ query, params: params || [] })
-    });
-
-    if (!neonRes.ok) {
-      const err = await neonRes.text();
-      return res.status(500).json({ error: err });
-    }
-
-    const data = await neonRes.json();
-    return res.status(200).json({ rows: data.rows || [] });
-
+    const sql = neon(process.env.NEON_CONNECTION_STRING);
+    const rows = await sql(query, params || []);
+    return res.status(200).json({ rows });
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }
